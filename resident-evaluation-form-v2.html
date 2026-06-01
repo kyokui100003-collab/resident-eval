@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>症例報告・ミニレクチャー 形成的評価票</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+  :root {
+    --ink: #1a1a2e;
+    --ink-light: #3d3d5c;
+    --paper: #faf8f4;
+    --paper-warm: #f0ece3;
+    --accent: #c0392b;
+    --accent-pale: #fdecea;
+    --teal: #1a6b6b;
+    --teal-pale: #e8f4f4;
+    --gold: #b7860b;
+    --gold-pale: #fdf6e3;
+    --border: #d4cfc5;
+    --border-strong: #9e9880;
+    --shadow: rgba(26,26,46,0.08);
+    --tap-target: 52px; /* iOS推奨44px以上 */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 15px; /* スマホでの可読性のため14→15px */
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    background: var(--ink);
+    color: white;
+    padding: 28px 20px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px; height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(192,57,43,0.25));
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--teal) 100%);
+  }
+  .header-kicker {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 6px;
+    font-weight: 300;
+  }
+  .header-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .header-subtitle {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+  }
+  .header-goal {
+    margin-top: 14px;
+    background: rgba(255,255,255,0.07);
+    border-left: 3px solid var(--accent);
+    padding: 8px 14px;
+    border-radius: 0 4px 4px 0;
+    font-size: 11px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 300;
+  }
+  .header-goal strong { color: white; font-weight: 500; }
+
+  /* ── META SECTION ── */
+  .meta-section {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 16px;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .meta-field label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .meta-field input, .meta-field select {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid var(--border-strong);
+    background: transparent;
+    padding: 6px 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    min-height: var(--tap-target);
+    /* スマホでフォントサイズ自動ズーム防止 */
+    -webkit-text-size-adjust: 100%;
+  }
+  .meta-field input:focus, .meta-field select:focus {
+    border-bottom-color: var(--teal);
+  }
+  .meta-field.full { grid-column: span 2; }
+
+  /* ── MAIN CONTENT ── */
+  .main-content {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 16px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 28px 0 14px;
+  }
+  .section-number {
+    width: 26px; height: 26px;
+    background: var(--ink);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .section-note {
+    font-size: 10px;
+    color: var(--ink-light);
+    font-weight: 300;
+    margin-left: auto;
+  }
+
+  /* ── RUBRIC CARD ── */
+  .rubric-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .rubric-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--paper-warm);
+  }
+  .rubric-index {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-pale);
+    border: 1px solid rgba(192,57,43,0.2);
+    padding: 2px 8px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .rubric-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .rubric-epa {
+    font-size: 10px;
+    color: var(--ink-light);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .rubric-epa span {
+    display: inline-block;
+    background: var(--teal-pale);
+    color: var(--teal);
+    border: 1px solid rgba(26,107,107,0.2);
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-right: 4px;
+    margin-bottom: 2px;
+    font-size: 9px;
+  }
+
+  /* ── ANCHOR TOGGLE ── */
+  .anchor-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px 0;
+    cursor: pointer;
+    user-select: none;
+  }
+  .anchor-toggle-label {
+    font-size: 11px;
+    color: var(--teal);
+    font-weight: 500;
+  }
+  .anchor-toggle-icon {
+    font-size: 10px;
+    color: var(--teal);
+    transition: transform 0.2s;
+  }
+  .anchor-toggle-icon.open { transform: rotate(180deg); }
+  .anchor-panel {
+    display: none;
+    padding: 8px 14px 4px;
+  }
+  .anchor-panel.open { display: block; }
+  .anchor-row {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 6px 8px;
+    margin-bottom: 4px;
+    font-size: 11px;
+    line-height: 1.4;
+    align-items: start;
+  }
+  .anchor-score {
+    font-weight: 700;
+    text-align: center;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .as-1 { background: #e8e8e8; color: #555; }
+  .as-2 { background: var(--gold-pale); color: var(--gold); }
+  .as-3 { background: var(--teal-pale); color: var(--teal); }
+  .as-4 { background: var(--accent-pale); color: var(--accent); }
+  .anchor-text { color: var(--ink-light); }
+  .anchor-text strong { display: inline; color: var(--ink); font-weight: 600; }
+
+  /* ── RADIO SCALE (スマホ最適化) ── */
+  .scale-section { padding: 12px 14px 14px; }
+
+  .radio-scale {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .radio-option {
+    position: relative;
+  }
+  .radio-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%; height: 100%;
+    cursor: pointer;
+    margin: 0;
+    z-index: 1;
+  }
+  .radio-option label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    min-height: var(--tap-target);
+    background: white;
+    touch-action: manipulation;
+  }
+  .radio-option label .score-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink-light);
+    line-height: 1;
+  }
+  .radio-option label .score-sub {
+    font-size: 9px;
+    font-weight: 500;
+    margin-top: 3px;
+    color: var(--ink-light);
+  }
+
+  /* 選択時 */
+  .radio-option[data-val="1"] input:checked + label { background: #6c6c6c; border-color: #6c6c6c; }
+  .radio-option[data-val="2"] input:checked + label { background: var(--gold); border-color: var(--gold); }
+  .radio-option[data-val="3"] input:checked + label { background: var(--teal); border-color: var(--teal); }
+  .radio-option[data-val="4"] input:checked + label { background: var(--accent); border-color: var(--accent); }
+  .radio-option input:checked + label .score-text,
+  .radio-option input:checked + label .score-sub { color: white; }
+
+  /* ── COMMENTS ── */
+  .comment-row { padding: 0 14px 12px; }
+  .comment-field label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-light);
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .comment-field textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    resize: vertical;
+    min-height: 60px;
+    background: var(--paper);
+    outline: none;
+    transition: border-color 0.2s;
+    line-height: 1.6;
+    -webkit-appearance: none;
+  }
+  .comment-field textarea:focus { border-color: var(--teal); background: white; }
+
+  .divider { border: none; border-top: 1px dashed var(--border); margin: 4px 14px 8px; }
+
+  /* ── LEGEND ── */
+  .legend-box {
+    background: var(--gold-pale);
+    border: 1px solid rgba(183,134,11,0.25);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+  }
+  .legend-box h4 {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .legend-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .legend-item { display: flex; align-items: flex-start; gap: 8px; }
+  .legend-badge {
+    font-size: 13px; font-weight: 700;
+    width: 24px; height: 24px;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .badge-1 { background: #e8e8e8; color: #555; }
+  .badge-2 { background: var(--gold-pale); color: var(--gold); border: 1px solid rgba(183,134,11,0.3); }
+  .badge-3 { background: var(--teal-pale); color: var(--teal); border: 1px solid rgba(26,107,107,0.3); }
+  .badge-4 { background: var(--accent-pale); color: var(--accent); border: 1px solid rgba(192,57,43,0.2); }
+  .legend-text { font-size: 11px; color: var(--ink-light); line-height: 1.4; }
+  .legend-text strong { display: block; font-size: 11px; font-weight: 700; color: var(--ink); }
+
+  /* ── SCORE SUMMARY ── */
+  .score-summary {
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .score-summary-label { font-size: 13px; font-weight: 600; }
+  .score-display {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .score-display span { font-size: 13px; color: var(--ink-light); font-family: 'Noto Sans JP', sans-serif; font-weight: 300; }
+
+  /* ── GLOBAL SCORE ── */
+  .global-score-card {
+    background: var(--ink);
+    color: white;
+    border-radius: 8px;
+    padding: 16px 16px;
+    margin-bottom: 24px;
+  }
+  .global-score-label {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .global-score-label small {
+    display: block;
+    font-size: 10px;
+    opacity: 0.6;
+    font-weight: 300;
+    margin-top: 2px;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .global-radio {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .global-btn {
+    height: var(--tap-target);
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: rgba(255,255,255,0.6);
+    background: transparent;
+    position: relative;
+    touch-action: manipulation;
+  }
+  .global-btn input { position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+  .global-btn .gb-sub { font-size: 9px; font-weight: 400; margin-left: 4px; opacity: 0.7; }
+  .global-btn.selected-1 { background: #6c6c6c; border-color: #6c6c6c; color: white; }
+  .global-btn.selected-2 { background: var(--gold); border-color: var(--gold); color: white; }
+  .global-btn.selected-3 { background: var(--teal); border-color: var(--teal); color: white; }
+  .global-btn.selected-4 { background: var(--accent); border-color: var(--accent); color: white; }
+
+  /* ── FREE TEXT ── */
+  .free-text-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-icon {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; flex-shrink: 0;
+  }
+  .icon-self { background: var(--gold-pale); color: var(--gold); border: 1px solid rgba(183,134,11,0.3); }
+  .icon-faculty { background: var(--teal-pale); color: var(--teal); border: 1px solid rgba(26,107,107,0.3); }
+  .icon-peer { background: var(--accent-pale); color: var(--accent); border: 1px solid rgba(192,57,43,0.2); }
+  .card-hint {
+    font-size: 11px;
+    color: var(--ink-light);
+    font-weight: 300;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .free-text-card textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    resize: vertical;
+    min-height: 90px;
+    background: var(--paper);
+    outline: none;
+    transition: border-color 0.2s;
+    line-height: 1.7;
+    -webkit-appearance: none;
+  }
+  .free-text-card textarea:focus { border-color: var(--teal); background: white; }
+
+  /* ── SUBMIT SECTION ── */
+  .submit-section {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .submit-section h3 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .gas-url-field {
+    width: 100%;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    outline: none;
+    margin-bottom: 8px;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .gas-url-field:focus { border-color: var(--teal); background: white; }
+  .gas-hint {
+    font-size: 11px;
+    color: var(--ink-light);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .gas-hint a { color: var(--teal); text-decoration: underline; }
+
+  /* ── BUTTONS ── */
+  .action-bar {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .btn {
+    padding: 0 16px;
+    height: var(--tap-target);
+    border-radius: 8px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: none;
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    letter-spacing: 0.02em;
+  }
+  .btn-secondary {
+    background: white;
+    color: var(--ink);
+    border: 1.5px solid var(--border-strong);
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--ink);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    white-space: nowrap;
+    z-index: 1000;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.success { background: var(--teal); }
+  .toast.error { background: var(--accent); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .progress-bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--accent));
+    border-radius: 3px;
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 11px;
+    color: var(--ink-light);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* ── FOOTNOTE ── */
+  .footnote {
+    font-size: 10px;
+    color: var(--ink-light);
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    margin-top: 4px;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  /* ── DESKTOP ── */
+  @media (min-width: 640px) {
+    .page-header { padding: 28px 32px 22px; }
+    .meta-section { padding: 20px 32px; }
+    .meta-grid { grid-template-columns: repeat(4, 1fr); }
+    .meta-field.full { grid-column: span 1; }
+    .main-content { padding: 28px 32px; }
+    .legend-grid { grid-template-columns: repeat(4, 1fr); }
+    .global-score-card { display: flex; align-items: center; gap: 20px; }
+    .global-radio { margin-top: 0; min-width: 260px; }
+    .action-bar { grid-template-columns: auto 1fr auto; }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .progress-bar-wrap, .submit-section, .action-bar { display: none; }
+    body { font-size: 12px; }
+    .main-content { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="page-header">
+  <p class="header-kicker">Formative Assessment / 形成的評価票</p>
+  <h1 class="header-title">症例報告・ミニレクチャー評価票</h1>
+  <p class="header-subtitle">救急外来症例発表 30分枠 ／ 研修医カンファレンス</p>
+  <div class="header-goal">
+    <strong>到達目標：</strong>学会発表で定型的な症例報告ができる ／ 臨床疑問をスライドにまとめ後輩指導・上司へのプレゼンができる
+  </div>
+</header>
+
+<!-- ── PROGRESS BAR ── -->
+<div class="progress-bar-wrap">
+  <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
+  <div class="progress-label" id="progressLabel">0 / 7 項目</div>
+</div>
+
+<!-- ── META ── -->
+<section class="meta-section">
+  <div class="meta-grid">
+    <div class="meta-field">
+      <label>発表者氏名</label>
+      <input type="text" id="meta_presenter" placeholder="研修医 氏名" autocomplete="name">
+    </div>
+    <div class="meta-field">
+      <label>発表日</label>
+      <input type="date" id="meta_date">
+    </div>
+    <div class="meta-field">
+      <label>評価者</label>
+      <input type="text" id="meta_evaluator" placeholder="氏名または役職">
+    </div>
+    <div class="meta-field">
+      <label>評価者の立場</label>
+      <select id="meta_role">
+        <option value="">選択</option>
+        <option>指導医・上級医</option>
+        <option>研修医（同期）</option>
+        <option>研修医（後輩）</option>
+        <option>本人（自己評価）</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<!-- ── MAIN ── -->
+<main class="main-content">
+
+  <!-- LEGEND -->
+  <div class="legend-box">
+    <h4>評価基準の目安（アンカー）</h4>
+    <div class="legend-grid">
+      <div class="legend-item"><div class="legend-badge badge-1">1</div><div class="legend-text"><strong>要改善</strong>重要な不足が複数あり、目標に届いていない</div></div>
+      <div class="legend-item"><div class="legend-badge badge-2">2</div><div class="legend-text"><strong>発展途上</strong>基本はできているが改善が必要な点が残る</div></div>
+      <div class="legend-item"><div class="legend-badge badge-3">3</div><div class="legend-text"><strong>達成</strong>期待される水準を概ね満たしている</div></div>
+      <div class="legend-item"><div class="legend-badge badge-4">4</div><div class="legend-text"><strong>優秀</strong>期待を上回る・今後のモデルとなる発表</div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <div class="section-title">項目別評価</div>
+    <div class="section-note">各項目 1–4 点</div>
+  </div>
+
+  <!-- ITEM A -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-index">A</div>
+      <div class="rubric-title-block">
+        <div class="rubric-title">症例提示の構成と情報の選択</div>
+        <div class="rubric-epa"><span>AAMC EPA #6</span><span>厚労省評価票 II</span>主訴・病歴・身体所見・検査を論理的に提示し、情報が絞り込まれている</div>
+      </div>
+    </div>
+    <div class="anchor-toggle" onclick="toggleAnchor('A')">
+      <span class="anchor-toggle-label">▸ 採点の目安を見る</span>
+      <span class="anchor-toggle-icon" id="anchor-icon-A">▾</span>
+    </div>
+    <div class="anchor-panel" id="anchor-panel-A">
+      <div class="anchor-row"><div class="anchor-score as-1">1</div><div class="anchor-text"><strong>要改善：</strong>情報が羅列・混乱しており要点が不明瞭</div></div>
+      <div class="anchor-row"><div class="anchor-score as-2">2</div><div class="anchor-text"><strong>発展途上：</strong>概ね構造化されているが余剰・欠落情報がある</div></div>
+      <div class="anchor-row"><div class="anchor-score as-3">3</div><div class="anchor-text"><strong>達成：</strong>要点が整理され、適切な情報量で提示できている</div></div>
+      <div class="anchor-row"><div class="anchor-score as-4">4</div><div class="anchor-text"><strong>優秀：</strong>聴衆を引き込む流れで、重要ポイントが際立っている</div></div>
+    </div>
+    <div class="scale-section">
+      <div class="radio-scale">
+        <div class="radio-option" data-val="1"><input type="radio" name="item_a" value="1" id="a1" onchange="updateProgress()"><label for="a1"><span class="score-text">1</span><span class="score-sub">要改善</span></label></div>
+        <div class="radio-option" data-val="2"><input type="radio" name="item_a" value="2" id="a2" onchange="updateProgress()"><label for="a2"><span class="score-text">2</span><span class="score-sub">発展途上</span></label></div>
+        <div class="radio-option" data-val="3"><input type="radio" name="item_a" value="3" id="a3" onchange="updateProgress()"><label for="a3"><span class="score-text">3</span><span class="score-sub">達成</span></label></div>
+        <div class="radio-option" data-val="4"><input type="radio" name="item_a" value="4" id="a4" onchange="updateProgress()"><label for="a4"><span class="score-text">4</span><span class="score-sub">優秀</span></label></div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="comment-row"><div class="comment-field"><label>気づき・コメント（任意）</label><textarea id="comment_a" placeholder="例：CCは明確だったが既往歴の重要性が後半まで説明されなかった"></textarea></div></div>
+  </div>
+
+  <!-- ITEM B -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-index">B</div>
+      <div class="rubric-title-block">
+        <div class="rubric-title">臨床推論プロセスの可視化</div>
+        <div class="rubric-epa"><span>AAMC EPA #1,2</span><span>ACGME Milestone PC-1</span>鑑別診断の絞り込み過程と検査・治療判断の根拠が伝わっている</div>
+      </div>
+    </div>
+    <div class="anchor-toggle" onclick="toggleAnchor('B')">
+      <span class="anchor-toggle-label">▸ 採点の目安を見る</span>
+      <span class="anchor-toggle-icon" id="anchor-icon-B">▾</span>
+    </div>
+    <div class="anchor-panel" id="anchor-panel-B">
+      <div class="anchor-row"><div class="anchor-score as-1">1</div><div class="anchor-text"><strong>要改善：</strong>結論のみ述べ、推論過程が示されていない</div></div>
+      <div class="anchor-row"><div class="anchor-score as-2">2</div><div class="anchor-text"><strong>発展途上：</strong>鑑別は列挙されているが優先順位の根拠が弱い</div></div>
+      <div class="anchor-row"><div class="anchor-score as-3">3</div><div class="anchor-text"><strong>達成：</strong>鑑別の絞り込みと検査選択の論拠が明示されている</div></div>
+      <div class="anchor-row"><div class="anchor-score as-4">4</div><div class="anchor-text"><strong>優秀：</strong>病態生理まで踏み込んだ推論で教育的価値が高い</div></div>
+    </div>
+    <div class="scale-section">
+      <div class="radio-scale">
+        <div class="radio-option" data-val="1"><input type="radio" name="item_b" value="1" id="b1" onchange="updateProgress()"><label for="b1"><span class="score-text">1</span><span class="score-sub">要改善</span></label></div>
+        <div class="radio-option" data-val="2"><input type="radio" name="item_b" value="2" id="b2" onchange="updateProgress()"><label for="b2"><span class="score-text">2</span><span class="score-sub">発展途上</span></label></div>
+        <div class="radio-option" data-val="3"><input type="radio" name="item_b" value="3" id="b3" onchange="updateProgress()"><label for="b3"><span class="score-text">3</span><span class="score-sub">達成</span></label></div>
+        <div class="radio-option" data-val="4"><input type="radio" name="item_b" value="4" id="b4" onchange="updateProgress()"><label for="b4"><span class="score-text">4</span><span class="score-sub">優秀</span></label></div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="comment-row"><div class="comment-field"><label>気づき・コメント（任意）</label><textarea id="comment_b" placeholder="例：SpO2低下の原因としてWells scoreを用いた判断の説明が良かった"></textarea></div></div>
+  </div>
+
+  <!-- ITEM C -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-index">C</div>
+      <div class="rubric-title-block">
+        <div class="rubric-title">文献・エビデンスの活用と解釈</div>
+        <div class="rubric-epa"><span>AAMC EPA #7</span><span>JSME 形成的評価指針</span>臨床疑問を定式化し文献を引用・解釈して実臨床への適用を議論している</div>
+      </div>
+    </div>
+    <div class="anchor-toggle" onclick="toggleAnchor('C')">
+      <span class="anchor-toggle-label">▸ 採点の目安を見る</span>
+      <span class="anchor-toggle-icon" id="anchor-icon-C">▾</span>
+    </div>
+    <div class="anchor-panel" id="anchor-panel-C">
+      <div class="anchor-row"><div class="anchor-score as-1">1</div><div class="anchor-text"><strong>要改善：</strong>文献引用がない、または不適切な引用がある</div></div>
+      <div class="anchor-row"><div class="anchor-score as-2">2</div><div class="anchor-text"><strong>発展途上：</strong>引用はあるが解釈や症例への適用が浅い</div></div>
+      <div class="anchor-row"><div class="anchor-score as-3">3</div><div class="anchor-text"><strong>達成：</strong>適切な文献をもとに take-home message が提示されている</div></div>
+      <div class="anchor-row"><div class="anchor-score as-4">4</div><div class="anchor-text"><strong>優秀：</strong>エビデンスの限界も論じ、批判的吟味ができている</div></div>
+    </div>
+    <div class="scale-section">
+      <div class="radio-scale">
+        <div class="radio-option" data-val="1"><input type="radio" name="item_c" value="1" id="c1" onchange="updateProgress()"><label for="c1"><span class="score-text">1</span><span class="score-sub">要改善</span></label></div>
+        <div class="radio-option" data-val="2"><input type="radio" name="item_c" value="2" id="c2" onchange="updateProgress()"><label for="c2"><span class="score-text">2</span><span class="score-sub">発展途上</span></label></div>
+        <div class="radio-option" data-val="3"><input type="radio" name="item_c" value="3" id="c3" onchange="updateProgress()"><label for="c3"><span class="score-text">3</span><span class="score-sub">達成</span></label></div>
+        <div class="radio-option" data-val="4"><input type="radio" name="item_c" value="4" id="c4" onchange="updateProgress()"><label for="c4"><span class="score-text">4</span><span class="score-sub">優秀</span></label></div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="comment-row"><div class="comment-field"><label>気づき・コメント（任意）</label><textarea id="comment_c" placeholder="例：ガイドラインの出版年が古く最新RCTへの言及があると良かった"></textarea></div></div>
+  </div>
+
+  <!-- ITEM D -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-index">D</div>
+      <div class="rubric-title-block">
+        <div class="rubric-title">スライドの構成・視覚的わかりやすさ</div>
+        <div class="rubric-epa"><span>ACGME ICS-2</span><span>各大学OSCE評価表</span>情報密度・図表・レイアウトが適切で、聴衆が理解しやすいスライド</div>
+      </div>
+    </div>
+    <div class="anchor-toggle" onclick="toggleAnchor('D')">
+      <span class="anchor-toggle-label">▸ 採点の目安を見る</span>
+      <span class="anchor-toggle-icon" id="anchor-icon-D">▾</span>
+    </div>
+    <div class="anchor-panel" id="anchor-panel-D">
+      <div class="anchor-row"><div class="anchor-score as-1">1</div><div class="anchor-text"><strong>要改善：</strong>文字過多・図なし、または構成が散漫</div></div>
+      <div class="anchor-row"><div class="anchor-score as-2">2</div><div class="anchor-text"><strong>発展途上：</strong>基本的な構成はあるが視認性・情報量に課題</div></div>
+      <div class="anchor-row"><div class="anchor-score as-3">3</div><div class="anchor-text"><strong>達成：</strong>図表を適切に使い、1スライド1メッセージが概ね実現</div></div>
+      <div class="anchor-row"><div class="anchor-score as-4">4</div><div class="anchor-text"><strong>優秀：</strong>視覚的に洗練され、スライド単体で理解が完結する</div></div>
+    </div>
+    <div class="scale-section">
+      <div class="radio-scale">
+        <div class="radio-option" data-val="1"><input type="radio" name="item_d" value="1" id="d1" onchange="updateProgress()"><label for="d1"><span class="score-text">1</span><span class="score-sub">要改善</span></label></div>
+        <div class="radio-option" data-val="2"><input type="radio" name="item_d" value="2" id="d2" onchange="updateProgress()"><label for="d2"><span class="score-text">2</span><span class="score-sub">発展途上</span></label></div>
+        <div class="radio-option" data-val="3"><input type="radio" name="item_d" value="3" id="d3" onchange="updateProgress()"><label for="d3"><span class="score-text">3</span><span class="score-sub">達成</span></label></div>
+        <div class="radio-option" data-val="4"><input type="radio" name="item_d" value="4" id="d4" onchange="updateProgress()"><label for="d4"><span class="score-text">4</span><span class="score-sub">優秀</span></label></div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="comment-row"><div class="comment-field"><label>気づき・コメント（任意）</label><textarea id="comment_d" placeholder="例：検査値の表をビジュアル化するとより伝わりやすい"></textarea></div></div>
+  </div>
+
+  <!-- ITEM E -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-index">E</div>
+      <div class="rubric-title-block">
+        <div class="rubric-title">口頭発表・質疑応答のコミュニケーション</div>
+        <div class="rubric-epa"><span>ACGME ICS-2</span><span>Mini-CEX</span>明瞭な言語表現で発表し、質問や割り込み問題に落ち着いて対応している</div>
+      </div>
+    </div>
+    <div class="anchor-toggle" onclick="toggleAnchor('E')">
+      <span class="anchor-toggle-label">▸ 採点の目安を見る</span>
+      <span class="anchor-toggle-icon" id="anchor-icon-E">▾</span>
+    </div>
+    <div class="anchor-panel" id="anchor-panel-E">
+      <div class="anchor-row"><div class="anchor-score as-1">1</div><div class="anchor-text"><strong>要改善：</strong>声量・速度・明瞭さに大きな課題、質問対応が困難</div></div>
+      <div class="anchor-row"><div class="anchor-score as-2">2</div><div class="anchor-text"><strong>発展途上：</strong>発表はできているが詰まりが多く、質問への対応が表面的</div></div>
+      <div class="anchor-row"><div class="anchor-score as-3">3</div><div class="anchor-text"><strong>達成：</strong>落ち着いて発表し、質問に対して誠実に回答できている</div></div>
+      <div class="anchor-row"><div class="anchor-score as-4">4</div><div class="anchor-text"><strong>優秀：</strong>聴衆を巻き込み対話的な場を作っている</div></div>
+    </div>
+    <div class="scale-section">
+      <div class="radio-scale">
+        <div class="radio-option" data-val="1"><input type="radio" name="item_e" value="1" id="e1" onchange="updateProgress()"><label for="e1"><span class="score-text">1</span><span class="score-sub">要改善</span></label></div>
+        <div class="radio-option" data-val="2"><input type="radio" name="item_e" value="2" id="e2" onchange="updateProgress()"><label for="e2"><span class="score-text">2</span><span class="score-sub">発展途上</span></label></div>
+        <div class="radio-option" data-val="3"><input type="radio" name="item_e" value="3" id="e3" onchange="updateProgress()"><label for="e3"><span class="score-text">3</span><span class="score-sub">達成</span></label></div>
+        <div class="radio-option" data-val="4"><input type="radio" name="item_e" value="4" id="e4" onchange="updateProgress()"><label for="e4"><span class="score-text">4</span><span class="score-sub">優秀</span></label></div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="comment-row"><div class="comment-field"><label>気づき・コメント（任意）</label><textarea id="comment_e" placeholder="例：割り込み質問で焦ったようだが、知らないことをはっきり伝えられたのは誠実"></textarea></div></div>
+  </div>
+
+  <!-- ITEM F -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-index">F</div>
+      <div class="rubric-title-block">
+        <div class="rubric-title">教育的配慮・Take-home messageの明確さ</div>
+        <div class="rubric-epa"><span>AAMC EPA #6</span><span>日本内科学会 JMECC</span>聴衆が「何を学んだか」を持ち帰れるよう教育的メッセージを意識している</div>
+      </div>
+    </div>
+    <div class="anchor-toggle" onclick="toggleAnchor('F')">
+      <span class="anchor-toggle-label">▸ 採点の目安を見る</span>
+      <span class="anchor-toggle-icon" id="anchor-icon-F">▾</span>
+    </div>
+    <div class="anchor-panel" id="anchor-panel-F">
+      <div class="anchor-row"><div class="anchor-score as-1">1</div><div class="anchor-text"><strong>要改善：</strong>まとめがなく、学習ポイントが不明確</div></div>
+      <div class="anchor-row"><div class="anchor-score as-2">2</div><div class="anchor-text"><strong>発展途上：</strong>まとめはあるが教育的視点が薄い</div></div>
+      <div class="anchor-row"><div class="anchor-score as-3">3</div><div class="anchor-text"><strong>達成：</strong>聴衆が持ち帰れる学習ポイントが明示されている</div></div>
+      <div class="anchor-row"><div class="anchor-score as-4">4</div><div class="anchor-text"><strong>優秀：</strong>臨床応用まで示し、聴衆の行動変容を促す内容</div></div>
+    </div>
+    <div class="scale-section">
+      <div class="radio-scale">
+        <div class="radio-option" data-val="1"><input type="radio" name="item_f" value="1" id="f1" onchange="updateProgress()"><label for="f1"><span class="score-text">1</span><span class="score-sub">要改善</span></label></div>
+        <div class="radio-option" data-val="2"><input type="radio" name="item_f" value="2" id="f2" onchange="updateProgress()"><label for="f2"><span class="score-text">2</span><span class="score-sub">発展途上</span></label></div>
+        <div class="radio-option" data-val="3"><input type="radio" name="item_f" value="3" id="f3" onchange="updateProgress()"><label for="f3"><span class="score-text">3</span><span class="score-sub">達成</span></label></div>
+        <div class="radio-option" data-val="4"><input type="radio" name="item_f" value="4" id="f4" onchange="updateProgress()"><label for="f4"><span class="score-text">4</span><span class="score-sub">優秀</span></label></div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="comment-row"><div class="comment-field"><label>気づき・コメント（任意）</label><textarea id="comment_f" placeholder="例：「この疾患を次にどう疑うか」まで言及できると完璧だった"></textarea></div></div>
+  </div>
+
+  <!-- ITEM G -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-index">G</div>
+      <div class="rubric-title-block">
+        <div class="rubric-title">省察・自己改善への意欲（自己評価のみ）</div>
+        <div class="rubric-epa"><span>厚労省評価票 III</span><span>JSME 省察指針</span>発表後に自分の準備・思考過程を振り返り、次回への改善点を述べられる</div>
+      </div>
+    </div>
+    <div class="anchor-toggle" onclick="toggleAnchor('G')">
+      <span class="anchor-toggle-label">▸ 採点の目安を見る</span>
+      <span class="anchor-toggle-icon" id="anchor-icon-G">▾</span>
+    </div>
+    <div class="anchor-panel" id="anchor-panel-G">
+      <div class="anchor-row"><div class="anchor-score as-1">1</div><div class="anchor-text"><strong>要改善：</strong>「よかったと思う」など表面的な振り返りにとどまる</div></div>
+      <div class="anchor-row"><div class="anchor-score as-2">2</div><div class="anchor-text"><strong>発展途上：</strong>問題点は挙げられるが改善策が漠然としている</div></div>
+      <div class="anchor-row"><div class="anchor-score as-3">3</div><div class="anchor-text"><strong>達成：</strong>具体的な改善点と次回への行動計画を語れる</div></div>
+      <div class="anchor-row"><div class="anchor-score as-4">4</div><div class="anchor-text"><strong>優秀：</strong>深い省察から思考の癖や認知バイアスにまで言及</div></div>
+    </div>
+    <div class="scale-section">
+      <div class="radio-scale">
+        <div class="radio-option" data-val="1"><input type="radio" name="item_g" value="1" id="g1" onchange="updateProgress()"><label for="g1"><span class="score-text">1</span><span class="score-sub">要改善</span></label></div>
+        <div class="radio-option" data-val="2"><input type="radio" name="item_g" value="2" id="g2" onchange="updateProgress()"><label for="g2"><span class="score-text">2</span><span class="score-sub">発展途上</span></label></div>
+        <div class="radio-option" data-val="3"><input type="radio" name="item_g" value="3" id="g3" onchange="updateProgress()"><label for="g3"><span class="score-text">3</span><span class="score-sub">達成</span></label></div>
+        <div class="radio-option" data-val="4"><input type="radio" name="item_g" value="4" id="g4" onchange="updateProgress()"><label for="g4"><span class="score-text">4</span><span class="score-sub">優秀</span></label></div>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="comment-row"><div class="comment-field"><label>気づき・コメント（任意）</label><textarea id="comment_g" placeholder="自己評価時は具体的な行動計画を記入してください"></textarea></div></div>
+  </div>
+
+  <!-- SCORE SUMMARY -->
+  <div class="score-summary">
+    <div>
+      <div class="score-summary-label">合計スコア</div>
+      <div style="font-size:11px;color:var(--ink-light);font-weight:300;margin-top:2px">選択済み項目の合計（最大28点）</div>
+    </div>
+    <div class="score-display" id="totalScore">— <span>/ 28点</span></div>
+  </div>
+
+  <!-- GLOBAL RATING -->
+  <div class="global-score-card">
+    <div class="global-score-label">
+      総合評価
+      <small>細かい項目に縛られず、全体の印象で直感的に評価してください</small>
+    </div>
+    <div class="global-radio">
+      <div class="global-btn" id="gb1" onclick="setGlobal(1)"><input type="radio" name="global" value="1">1</div>
+      <div class="global-btn" id="gb2" onclick="setGlobal(2)"><input type="radio" name="global" value="2">2</div>
+      <div class="global-btn" id="gb3" onclick="setGlobal(3)"><input type="radio" name="global" value="3">3</div>
+      <div class="global-btn" id="gb4" onclick="setGlobal(4)"><input type="radio" name="global" value="4">4</div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-header">
+    <div class="section-number">2</div>
+    <div class="section-title">自由記載欄</div>
+    <div class="section-note">立場から率直に</div>
+  </div>
+
+  <div class="free-text-card">
+    <div class="card-title"><div class="card-icon icon-self">✎</div>発表者の自己評価・次回への課題</div>
+    <div class="card-hint">「次回は〇〇する」という形で具体的に書くと効果的です。</div>
+    <textarea id="free_self" placeholder="例：&#10;・鑑別診断のスライドに時間をかけすぎた。次回はアウトラインを先に決めて練習時間を計る。&#10;・文献検索は3日前までに終わらせ、上級医にレビューをもらう。"></textarea>
+  </div>
+
+  <div class="free-text-card">
+    <div class="card-title"><div class="card-icon icon-faculty">◈</div>指導医・上級医からのコメント</div>
+    <div class="card-hint">良かった点を1つ以上、「次にこうするとよい」という前向きな形で。</div>
+    <textarea id="free_faculty" placeholder="例：&#10;【良かった点】心電図の読み方の説明が丁寧で後輩にとって理解しやすかった。&#10;【改善点】治療選択でガイドラインと実臨床の乖離に触れると実践的になる。"></textarea>
+  </div>
+
+  <div class="free-text-card">
+    <div class="card-title"><div class="card-icon icon-peer">♟</div>研修医仲間からのコメント</div>
+    <div class="card-hint">「自分だったらこうする」「この部分が一番役に立った」など気軽に。</div>
+    <textarea id="free_peer" placeholder="例：&#10;・質問への対応が落ち着いていて自分も真似したい。&#10;・造影CTの判断基準を教えてもらえてよかった。"></textarea>
+  </div>
+
+  <!-- SECTION 3: SUBMIT -->
+  <div class="section-header">
+    <div class="section-number">3</div>
+    <div class="section-title">送信（Google Sheetsに記録）</div>
+  </div>
+
+  <div class="submit-section">
+    <h3>⚙️ Apps Script URL（管理者が設定）</h3>
+    <input type="url" class="gas-url-field" id="gasUrl"
+      placeholder="https://script.google.com/macros/s/xxxxxxxx/exec"
+      value="https://script.google.com/macros/s/AKfycbwJPO8WtZdefhwc0C-srR8lC1QJYKaxX6C_BwlcQudb7eXt9BrO16yeKuyXWd0Dd4QMNA/exec">
+    <div class="gas-hint">
+      ※ この欄は管理者がURLを貼り付けた状態でHTMLを配布します。設定方法は下の手順書を参照。<br>
+      URLを設定すると「送信」ボタンが有効になります。
+    </div>
+    <div class="action-bar">
+      <button class="btn btn-secondary" onclick="resetForm()">リセット</button>
+      <button class="btn btn-primary" id="submitBtn" onclick="submitForm()" disabled>
+        ✉ Sheetsに送信
+      </button>
+    </div>
+    <div style="font-size:11px;color:var(--ink-light);line-height:1.6;">
+      ※ 送信後もこの画面のデータは残ります。印刷・PDF保存は
+      <span style="cursor:pointer;color:var(--teal);text-decoration:underline;" onclick="window.print()">こちら</span>
+    </div>
+  </div>
+
+  <!-- FOOTNOTE -->
+  <div class="footnote">
+    【評価項目の主な出典】AAMC Core EPAs for Entering Residency (2014) EPA #1, 2, 6, 7 ／ ACGME Milestones: ICS-2, PC-1 ／ Mini-CEX (Royal College of Physicians) ／ 厚生労働省「医師臨床研修の到達目標」研修医評価票 II・III（2020年改訂）／ JSME（日本医学教育学会）形成的評価指針 ／ 日本内科学会 JMECC 評価表
+  </div>
+
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const ITEMS = ['a','b','c','d','e','f','g'];
+let globalVal = 0;
+
+// ── Progress ──
+function updateProgress() {
+  const filled = ITEMS.filter(i => document.querySelector(`input[name="item_${i}"]:checked`)).length;
+  const pct = (filled / ITEMS.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `${filled} / ${ITEMS.length} 項目`;
+  calcTotal();
+}
+
+// ── Score ──
+function calcTotal() {
+  let total = 0, count = 0;
+  ITEMS.forEach(i => {
+    const c = document.querySelector(`input[name="item_${i}"]:checked`);
+    if (c) { total += parseInt(c.value); count++; }
+  });
+  const el = document.getElementById('totalScore');
+  el.innerHTML = count === 0
+    ? '— <span>/ 28点</span>'
+    : `${total} <span>/ ${count * 4}点（${count}項目）</span>`;
+}
+
+// ── Global ──
+function setGlobal(v) {
+  globalVal = v;
+  [1,2,3,4].forEach(i => {
+    document.getElementById(`gb${i}`).className =
+      'global-btn' + (i === v ? ` selected-${i}` : '');
+  });
+}
+
+// ── Anchor toggle ──
+function toggleAnchor(key) {
+  const panel = document.getElementById(`anchor-panel-${key}`);
+  const icon  = document.getElementById(`anchor-icon-${key}`);
+  const label = icon.previousElementSibling;
+  const isOpen = panel.classList.toggle('open');
+  icon.classList.toggle('open', isOpen);
+  label.textContent = isOpen ? '▾ 採点の目安を閉じる' : '▸ 採点の目安を見る';
+}
+
+// ── GAS URL watcher → enable submit ──
+document.getElementById('gasUrl').addEventListener('input', function() {
+  document.getElementById('submitBtn').disabled = !this.value.trim().startsWith('https://script.google.com');
+});
+
+// ── Submit ──
+async function submitForm() {
+  const url = document.getElementById('gasUrl').value.trim();
+  if (!url) { showToast('Apps Script URLを入力してください', 'error'); return; }
+
+  const payload = {
+    timestamp:   new Date().toLocaleString('ja-JP'),
+    presenter:   document.getElementById('meta_presenter').value,
+    date:        document.getElementById('meta_date').value,
+    evaluator:   document.getElementById('meta_evaluator').value,
+    role:        document.getElementById('meta_role').value,
+    item_a: getScore('a'), item_b: getScore('b'), item_c: getScore('c'),
+    item_d: getScore('d'), item_e: getScore('e'), item_f: getScore('f'),
+    item_g: getScore('g'),
+    total:       calcTotalNum(),
+    global:      globalVal || '',
+    comment_a:   document.getElementById('comment_a').value,
+    comment_b:   document.getElementById('comment_b').value,
+    comment_c:   document.getElementById('comment_c').value,
+    comment_d:   document.getElementById('comment_d').value,
+    comment_e:   document.getElementById('comment_e').value,
+    comment_f:   document.getElementById('comment_f').value,
+    comment_g:   document.getElementById('comment_g').value,
+    free_self:   document.getElementById('free_self').value,
+    free_faculty:document.getElementById('free_faculty').value,
+    free_peer:   document.getElementById('free_peer').value,
+  };
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '送信中…';
+
+  try {
+    await fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    showToast('✓ 送信しました！', 'success');
+  } catch(e) {
+    showToast('送信エラー。URLを確認してください', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✉ Sheetsに送信';
+    // re-check URL
+    const u = document.getElementById('gasUrl').value.trim();
+    btn.disabled = !u.startsWith('https://script.google.com');
+  }
+}
+
+function getScore(item) {
+  const c = document.querySelector(`input[name="item_${item}"]:checked`);
+  return c ? parseInt(c.value) : '';
+}
+function calcTotalNum() {
+  return ITEMS.reduce((s, i) => s + (getScore(i) || 0), 0);
+}
+
+// ── Toast ──
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type ? ' ' + type : '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── Reset ──
+function resetForm() {
+  if (!confirm('入力内容をすべてリセットしますか？')) return;
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  ['meta_presenter','meta_date','meta_evaluator'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('meta_role').selectedIndex = 0;
+  document.querySelectorAll('textarea').forEach(t => t.value = '');
+  globalVal = 0;
+  [1,2,3,4].forEach(i => document.getElementById(`gb${i}`).className = 'global-btn');
+  // close anchors
+  'ABCDEFG'.split('').forEach(k => {
+    const p = document.getElementById(`anchor-panel-${k}`);
+    const ic = document.getElementById(`anchor-icon-${k}`);
+    if (p) { p.classList.remove('open'); ic.classList.remove('open'); }
+  });
+  updateProgress();
+  showToast('リセットしました');
+}
+
+// ── Init ──
+updateProgress();
+// today as default date
+document.getElementById('meta_date').valueAsDate = new Date();
+</script>
+</body>
+</html>
