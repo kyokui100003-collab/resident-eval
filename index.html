@@ -671,6 +671,72 @@
     body { font-size: 12px; }
     .main-content { padding: 16px; }
   }
+
+  /* ── COMPLETION OVERLAY ── */
+  .completion-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,26,46,0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .completion-overlay.show {
+    display: flex;
+  }
+  .completion-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px 32px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+    animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+  .completion-icon {
+    width: 72px; height: 72px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 36px;
+  }
+  .completion-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .completion-sub {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .completion-btn {
+    width: 100%;
+    height: 52px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: background 0.15s;
+  }
+  .completion-btn:hover { background: var(--teal-light, #2e8b8b); }
+
 </style>
 </head>
 <body>
@@ -926,42 +992,12 @@
     <div class="comment-row"><div class="comment-field"><label>気づき・コメント（任意）</label><textarea id="comment_f" placeholder="例：「この疾患を次にどう疑うか」まで言及できると完璧だった"></textarea></div></div>
   </div>
 
-  <!-- ITEM G -->
-  <div class="rubric-card">
-    <div class="rubric-header">
-      <div class="rubric-index">G</div>
-      <div class="rubric-title-block">
-        <div class="rubric-title">省察・自己改善への意欲（自己評価のみ）</div>
-        <div class="rubric-epa"><span>厚労省評価票 III</span><span>JSME 省察指針</span>発表後に自分の準備・思考過程を振り返り、次回への改善点を述べられる</div>
-      </div>
-    </div>
-    <div class="anchor-toggle" onclick="toggleAnchor('G')">
-      <span class="anchor-toggle-label">▸ 採点の目安を見る</span>
-      <span class="anchor-toggle-icon" id="anchor-icon-G">▾</span>
-    </div>
-    <div class="anchor-panel" id="anchor-panel-G">
-      <div class="anchor-row"><div class="anchor-score as-1">1</div><div class="anchor-text"><strong>要改善：</strong>「よかったと思う」など表面的な振り返りにとどまる</div></div>
-      <div class="anchor-row"><div class="anchor-score as-2">2</div><div class="anchor-text"><strong>発展途上：</strong>問題点は挙げられるが改善策が漠然としている</div></div>
-      <div class="anchor-row"><div class="anchor-score as-3">3</div><div class="anchor-text"><strong>達成：</strong>具体的な改善点と次回への行動計画を語れる</div></div>
-      <div class="anchor-row"><div class="anchor-score as-4">4</div><div class="anchor-text"><strong>優秀：</strong>深い省察から思考の癖や認知バイアスにまで言及</div></div>
-    </div>
-    <div class="scale-section">
-      <div class="radio-scale">
-        <div class="radio-option" data-val="1"><input type="radio" name="item_g" value="1" id="g1" onchange="updateProgress()"><label for="g1"><span class="score-text">1</span><span class="score-sub">要改善</span></label></div>
-        <div class="radio-option" data-val="2"><input type="radio" name="item_g" value="2" id="g2" onchange="updateProgress()"><label for="g2"><span class="score-text">2</span><span class="score-sub">発展途上</span></label></div>
-        <div class="radio-option" data-val="3"><input type="radio" name="item_g" value="3" id="g3" onchange="updateProgress()"><label for="g3"><span class="score-text">3</span><span class="score-sub">達成</span></label></div>
-        <div class="radio-option" data-val="4"><input type="radio" name="item_g" value="4" id="g4" onchange="updateProgress()"><label for="g4"><span class="score-text">4</span><span class="score-sub">優秀</span></label></div>
-      </div>
-    </div>
-    <hr class="divider">
-    <div class="comment-row"><div class="comment-field"><label>気づき・コメント（任意）</label><textarea id="comment_g" placeholder="自己評価時は具体的な行動計画を記入してください"></textarea></div></div>
-  </div>
 
   <!-- SCORE SUMMARY -->
   <div class="score-summary">
     <div>
       <div class="score-summary-label">合計スコア</div>
-      <div style="font-size:11px;color:var(--ink-light);font-weight:300;margin-top:2px">選択済み項目の合計（最大28点）</div>
+      <div style="font-size:11px;color:var(--ink-light);font-weight:300;margin-top:2px">選択済み項目の合計（最大24点）</div>
     </div>
     <div class="score-display" id="totalScore">— <span>/ 28点</span></div>
   </div>
@@ -988,21 +1024,9 @@
   </div>
 
   <div class="free-text-card">
-    <div class="card-title"><div class="card-icon icon-self">✎</div>発表者の自己評価・次回への課題</div>
-    <div class="card-hint">「次回は〇〇する」という形で具体的に書くと効果的です。</div>
-    <textarea id="free_self" placeholder="例：&#10;・鑑別診断のスライドに時間をかけすぎた。次回はアウトラインを先に決めて練習時間を計る。&#10;・文献検索は3日前までに終わらせ、上級医にレビューをもらう。"></textarea>
-  </div>
-
-  <div class="free-text-card">
-    <div class="card-title"><div class="card-icon icon-faculty">◈</div>指導医・上級医からのコメント</div>
-    <div class="card-hint">良かった点を1つ以上、「次にこうするとよい」という前向きな形で。</div>
-    <textarea id="free_faculty" placeholder="例：&#10;【良かった点】心電図の読み方の説明が丁寧で後輩にとって理解しやすかった。&#10;【改善点】治療選択でガイドラインと実臨床の乖離に触れると実践的になる。"></textarea>
-  </div>
-
-  <div class="free-text-card">
-    <div class="card-title"><div class="card-icon icon-peer">♟</div>研修医仲間からのコメント</div>
-    <div class="card-hint">「自分だったらこうする」「この部分が一番役に立った」など気軽に。</div>
-    <textarea id="free_peer" placeholder="例：&#10;・質問への対応が落ち着いていて自分も真似したい。&#10;・造影CTの判断基準を教えてもらえてよかった。"></textarea>
+    <div class="card-title"><div class="card-icon icon-faculty">✎</div>コメント・自己評価</div>
+    <div class="card-hint">フィードバックコメント（良かった点・改善点）または自己評価・次回への課題を自由に記入してください。</div>
+    <textarea id="free_comment" style="min-height:120px;" placeholder="例（指導医・上級医）：&#10;【良かった点】心電図の読み方の説明が丁寧だった。&#10;【改善点】治療選択でガイドラインと実臨床の乖離に触れると実践的になる。&#10;&#10;例（自己評価）：&#10;・鑑別診断のスライドに時間をかけすぎた。次回はアウトラインを先に決める。"></textarea>
   </div>
 
   <!-- SECTION 3: SUBMIT -->
@@ -1015,7 +1039,7 @@
     <h3>⚙️ Apps Script URL（管理者が設定）</h3>
     <input type="url" class="gas-url-field" id="gasUrl"
       placeholder="https://script.google.com/macros/s/xxxxxxxx/exec"
-      value="https://script.google.com/macros/s/AKfycbwJPO8WtZdefhwc0C-srR8lC1QJYKaxX6C_BwlcQudb7eXt9BrO16yeKuyXWd0Dd4QMNA/exec">
+      value="">
     <div class="gas-hint">
       ※ この欄は管理者がURLを貼り付けた状態でHTMLを配布します。設定方法は下の手順書を参照。<br>
       URLを設定すると「送信」ボタンが有効になります。
@@ -1039,11 +1063,22 @@
 
 </main>
 
+
+  <!-- COMPLETION OVERLAY -->
+  <div class="completion-overlay" id="completionOverlay">
+    <div class="completion-card">
+      <div class="completion-icon">✓</div>
+      <div class="completion-title">評価を送信しました</div>
+      <div class="completion-sub">Google Sheetsへの記録が完了しました。<br>ご協力ありがとうございました。</div>
+      <button class="completion-btn" onclick="resetAndClose()">新しい評価を始める</button>
+    </div>
+  </div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-const ITEMS = ['a','b','c','d','e','f','g'];
+const ITEMS = ['a','b','c','d','e','f'];
 let globalVal = 0;
 
 // ── Progress ──
@@ -1064,7 +1099,7 @@ function calcTotal() {
   });
   const el = document.getElementById('totalScore');
   el.innerHTML = count === 0
-    ? '— <span>/ 28点</span>'
+    ? '— <span>/ 24点</span>'
     : `${total} <span>/ ${count * 4}点（${count}項目）</span>`;
 }
 
@@ -1105,7 +1140,6 @@ async function submitForm() {
     role:        document.getElementById('meta_role').value,
     item_a: getScore('a'), item_b: getScore('b'), item_c: getScore('c'),
     item_d: getScore('d'), item_e: getScore('e'), item_f: getScore('f'),
-    item_g: getScore('g'),
     total:       calcTotalNum(),
     global:      globalVal || '',
     comment_a:   document.getElementById('comment_a').value,
@@ -1114,10 +1148,7 @@ async function submitForm() {
     comment_d:   document.getElementById('comment_d').value,
     comment_e:   document.getElementById('comment_e').value,
     comment_f:   document.getElementById('comment_f').value,
-    comment_g:   document.getElementById('comment_g').value,
-    free_self:   document.getElementById('free_self').value,
-    free_faculty:document.getElementById('free_faculty').value,
-    free_peer:   document.getElementById('free_peer').value,
+    free_comment:document.getElementById('free_comment').value,
   };
 
   const btn = document.getElementById('submitBtn');
@@ -1131,7 +1162,7 @@ async function submitForm() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    showToast('✓ 送信しました！', 'success');
+    showCompletion();
   } catch(e) {
     showToast('送信エラー。URLを確認してください', 'error');
   } finally {
@@ -1149,6 +1180,29 @@ function getScore(item) {
 }
 function calcTotalNum() {
   return ITEMS.reduce((s, i) => s + (getScore(i) || 0), 0);
+}
+
+// ── Completion overlay ──
+function showCompletion() {
+  document.getElementById('completionOverlay').classList.add('show');
+}
+function resetAndClose() {
+  document.getElementById('completionOverlay').classList.remove('show');
+  // フォームリセット（確認なし）
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  ['meta_presenter','meta_date','meta_evaluator'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('meta_role').selectedIndex = 0;
+  document.querySelectorAll('textarea').forEach(t => t.value = '');
+  globalVal = 0;
+  [1,2,3,4].forEach(i => document.getElementById(`gb${i}`).className = 'global-btn');
+  'ABCDEF'.split('').forEach(k => {
+    const p = document.getElementById(`anchor-panel-${k}`);
+    const ic = document.getElementById(`anchor-icon-${k}`);
+    if (p) { p.classList.remove('open'); ic.classList.remove('open'); }
+  });
+  document.getElementById('meta_date').valueAsDate = new Date();
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ── Toast ──
@@ -1170,7 +1224,7 @@ function resetForm() {
   globalVal = 0;
   [1,2,3,4].forEach(i => document.getElementById(`gb${i}`).className = 'global-btn');
   // close anchors
-  'ABCDEFG'.split('').forEach(k => {
+  'ABCDEF'.split('').forEach(k => {
     const p = document.getElementById(`anchor-panel-${k}`);
     const ic = document.getElementById(`anchor-icon-${k}`);
     if (p) { p.classList.remove('open'); ic.classList.remove('open'); }
