@@ -1037,14 +1037,7 @@
   </div>
 
   <div class="submit-section">
-    <h3>⚙️ Apps Script URL（管理者が設定）</h3>
-    <input type="url" class="gas-url-field" id="gasUrl"
-      placeholder="https://script.google.com/macros/s/xxxxxxxx/exec"
-      value="">
-    <div class="gas-hint">
-      ※ この欄は管理者がURLを貼り付けた状態でHTMLを配布します。設定方法は下の手順書を参照。<br>
-      URLを設定すると「送信」ボタンが有効になります。
-    </div>
+    <input type="hidden" id="gasUrl" value="">
     <div class="action-bar">
       <button class="btn btn-secondary" onclick="resetForm()">リセット</button>
       <button class="btn btn-primary" id="submitBtn" onclick="submitForm()" disabled>
@@ -1235,14 +1228,14 @@ function resetForm() {
 }
 
 // ── Init ──
+// ▼ Apps Script URL（ここだけ管理）
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwJPO8WtZdefhwc0C-srR8lC1QJYKaxX6C_BwlcQudb7eXt9BrO16yeKuyXWd0Dd4QMNA/exec';
+document.getElementById('gasUrl').value = GAS_URL;
 updateProgress();
 // today as default date
 document.getElementById('meta_date').valueAsDate = new Date();
-// ページ読み込み時にURLが埋め込まれていれば送信ボタンを有効化
-(function() {
-  const u = document.getElementById('gasUrl').value.trim();
-  document.getElementById('submitBtn').disabled = !u.startsWith('https://script.google.com');
-})();
+// GAS_URLが設定されていれば送信ボタンを有効化
+document.getElementById('submitBtn').disabled = !GAS_URL.startsWith('https://script.google.com');
 </script>
 </body>
 </html>
