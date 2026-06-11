@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>症例報告・ミニレクチャー 形成的評価票</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
 
   :root {
     --ink: #1a1a2e;
@@ -33,7 +33,7 @@
     background: var(--paper);
     color: var(--ink);
     line-height: 1.7;
-    font-size: 15px; /* スマホでの可読性のため14→15px */
+    font-size: 16px; /* スマホ可読性 */
   }
 
   /* ── HEADER ── */
@@ -59,7 +59,7 @@
     background: linear-gradient(90deg, var(--accent) 0%, var(--teal) 100%);
   }
   .header-kicker {
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.5);
@@ -67,8 +67,8 @@
     font-weight: 300;
   }
   .header-title {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 19px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: 0.04em;
     margin-bottom: 4px;
@@ -117,7 +117,7 @@
     background: transparent;
     padding: 6px 0;
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     color: var(--ink);
     outline: none;
     transition: border-color 0.2s;
@@ -155,9 +155,9 @@
     flex-shrink: 0;
   }
   .section-title {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 15px;
-    font-weight: 700;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 17px;
+    font-weight: 900;
     color: var(--ink);
   }
   .section-note {
@@ -198,12 +198,12 @@
   }
   .rubric-title {
     font-weight: 700;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--ink);
     margin-bottom: 3px;
   }
   .rubric-epa {
-    font-size: 10px;
+    font-size: 12px;
     color: var(--ink-light);
     font-weight: 300;
     line-height: 1.5;
@@ -265,7 +265,7 @@
   .as-2 { background: var(--gold-pale); color: var(--gold); }
   .as-3 { background: var(--teal-pale); color: var(--teal); }
   .as-4 { background: var(--accent-pale); color: var(--accent); }
-  .anchor-text { color: var(--ink-light); }
+  .anchor-text { color: var(--ink-light); font-size: 13px; }
   .anchor-text strong { display: inline; color: var(--ink); font-weight: 600; }
 
   /* ── RADIO SCALE (スマホ最適化) ── */
@@ -302,13 +302,13 @@
     touch-action: manipulation;
   }
   .radio-option label .score-text {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     color: var(--ink-light);
     line-height: 1;
   }
   .radio-option label .score-sub {
-    font-size: 9px;
+    font-size: 11px;
     font-weight: 500;
     margin-top: 3px;
     color: var(--ink-light);
@@ -338,7 +338,7 @@
     border-radius: 6px;
     padding: 10px 12px;
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--ink);
     resize: vertical;
     min-height: 60px;
@@ -385,8 +385,8 @@
   .badge-2 { background: var(--gold-pale); color: var(--gold); border: 1px solid rgba(183,134,11,0.3); }
   .badge-3 { background: var(--teal-pale); color: var(--teal); border: 1px solid rgba(26,107,107,0.3); }
   .badge-4 { background: var(--accent-pale); color: var(--accent); border: 1px solid rgba(192,57,43,0.2); }
-  .legend-text { font-size: 11px; color: var(--ink-light); line-height: 1.4; }
-  .legend-text strong { display: block; font-size: 11px; font-weight: 700; color: var(--ink); }
+  .legend-text { font-size: 13px; color: var(--ink-light); line-height: 1.4; }
+  .legend-text strong { display: block; font-size: 13px; font-weight: 700; color: var(--ink); }
 
   /* ── SCORE SUMMARY ── */
   .score-summary {
@@ -399,10 +399,10 @@
     align-items: center;
     justify-content: space-between;
   }
-  .score-summary-label { font-size: 13px; font-weight: 600; }
+  .score-summary-label { font-size: 15px; font-weight: 600; }
   .score-display {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 26px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 28px;
     font-weight: 700;
     color: var(--ink);
   }
@@ -417,8 +417,9 @@
     margin-bottom: 24px;
   }
   .global-score-label {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
     margin-bottom: 4px;
   }
   .global-score-label small {
@@ -465,8 +466,8 @@
     margin-bottom: 12px;
   }
   .card-title {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
     font-weight: 700;
     margin-bottom: 4px;
     color: var(--ink);
@@ -484,7 +485,7 @@
   .icon-faculty { background: var(--teal-pale); color: var(--teal); border: 1px solid rgba(26,107,107,0.3); }
   .icon-peer { background: var(--accent-pale); color: var(--accent); border: 1px solid rgba(192,57,43,0.2); }
   .card-hint {
-    font-size: 11px;
+    font-size: 13px;
     color: var(--ink-light);
     font-weight: 300;
     margin-bottom: 10px;
@@ -496,7 +497,7 @@
     border-radius: 6px;
     padding: 10px 12px;
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--ink);
     resize: vertical;
     min-height: 90px;
@@ -541,7 +542,7 @@
   }
   .gas-url-field:focus { border-color: var(--teal); background: white; }
   .gas-hint {
-    font-size: 11px;
+    font-size: 13px;
     color: var(--ink-light);
     margin-bottom: 12px;
     line-height: 1.5;
@@ -634,7 +635,7 @@
     width: 0%;
   }
   .progress-label {
-    font-size: 11px;
+    font-size: 13px;
     color: var(--ink-light);
     font-weight: 500;
     white-space: nowrap;
@@ -642,7 +643,7 @@
 
   /* ── FOOTNOTE ── */
   .footnote {
-    font-size: 10px;
+    font-size: 12px;
     color: var(--ink-light);
     border-top: 1px solid var(--border);
     padding-top: 10px;
@@ -709,7 +710,7 @@
     font-size: 36px;
   }
   .completion-title {
-    font-family: 'Noto Serif JP', serif;
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 22px;
     font-weight: 700;
     color: var(--ink);
